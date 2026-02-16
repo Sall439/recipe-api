@@ -4,15 +4,17 @@ const ENV = require("./config/env.js")
 const db = require("./config/db.js")
 const  favoritesTable  = require("./db/schema.js")
 const { eq, and } = require("drizzle-orm") 
+const job = require("./config/cron.js")
 
 
 
-
+if(ENV.NODE_ENV === "production") job.start()
 
 const PORT = ENV.PORT
 
 const app = express()
 app.use(express.json())
+
 
 app.post("/api/favorites", async(req, res) => {
     try {
